@@ -572,6 +572,11 @@ class HGetRecordCommand : public Command {
     const std::vector<std::string>& args = sess->getArgs();
     const std::string& key = args[1];
     const std::string& subkey = args[2];
+    // coredump test
+    const std::string& coredumpTest = args[3];
+    if (coredumpTest != "") {
+      LOG(INFO) << "coredumpTest: " << coredumpTest;
+    }
 
     SessionCtx* pCtx = sess->getCtx();
     INVARIANT(pCtx != nullptr);

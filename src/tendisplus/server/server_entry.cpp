@@ -399,10 +399,12 @@ ServerEntry::ServerEntry(const std::shared_ptr<ServerParams>& cfg)
   _cfg->serverParamsVar("rocks.rate_limiter_rate_bytes_per_sec")
     ->setUpdate(
       [this]() { updateRateLimiter(_cfg->rocksRateLimiterRateBytesPerSec); });
+  _engine = wasm_engine_new();
 }
 
 ServerEntry::~ServerEntry() {
   stop();
+  wasm_engine_delete(_engine);
 }
 
 void ServerEntry::resetServerStat() {

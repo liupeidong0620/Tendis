@@ -18,6 +18,10 @@
 #include <utility>
 #include <vector>
 
+#include <wasi.h>
+#include <wasm.h>
+#include <wasmtime.h>
+
 #include "tendisplus/cluster/cluster_manager.h"
 #include "tendisplus/cluster/gc_manager.h"
 #include "tendisplus/cluster/migrate_manager.h"
@@ -510,6 +514,7 @@ class ServerEntry : public std::enable_shared_from_this<ServerEntry> {
   CompactionStat _compactionStat;
   SlowlogStat _slowlogStat;
   uint32_t _lastJeprofDumpMemoryGB;
+  wasm_engine_t *_engine;
 };
 }  // namespace tendisplus
 

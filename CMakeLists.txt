@@ -305,6 +305,22 @@ include_directories(${ROCKSDB_DIR})
 include_directories(${ROCKSDB_DIR}/rocksdb)
 include_directories(${ROCKSDB_DIR}/rocksdb/include)
 
+# wasmtime (only linux)
+# wget https://github.com/bytecodealliance/wasmtime/releases/download/v30.0.2/wasmtime-v30.0.2-x86_64-linux-c-api.tar.xz
+set(WASMTIME_TAR_FILE "${PROJECT_SOURCE_DIR}/src/thirdparty/wasmtime-v30.0.2-x86_64-linux-c-api.tar.xz")
+set(WASMTIME_DIR "${PROJECT_SOURCE_DIR}/src/thirdparty/wasmtime-v30.0.2-x86_64-linux-c-api")
+if(NOT EXISTS ${WASMTIME_DIR})
+    # Unpack the tar file
+    file(ARCHIVE_EXTRACT
+        INPUT ${WASMTIME_TAR_FILE}
+        DESTINATION ${PROJECT_SOURCE_DIR}/src/thirdparty
+    )
+endif()
+
+set(WASMTIME_LIBRARIES ${WASMTIME_DIR}/lib/libwasmtime.a)
+list(APPEND SYS_LIBS ${WASMTIME_LIBRARIES})
+include_directories("${WASMTIME_DIR}/include")
+
 # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address")
 
 add_subdirectory(src/tendisplus/network)
